@@ -1,42 +1,47 @@
-Version 2.18.1 - 2018-06-25
----------------------------
-
-Other Changes:
-
-- Remove soft-links for NEWS and ChangeLog files for platform portability.
-
-
-Version 2.18.0 - 2018-06-19
----------------------------
-
-Bug fixes:
-
-- ci.binom() was using an incorrect method for calcuating binomial
-  conficence intervals.  It now calculates the Clopper-Pearson 'exect'
-  interval, which is *conservative* due to the discrete nature of the
-  binomial distribution.
-
-Other Changes:
-
-- Support for lme4 objects has been removed due to incompatible
-  changes to the lme4 package.
-
-Version 2.16.0 - 2014-07-24
----------------------------
+# gmodels Version 2.19.0  - 2024-04-04
 
 New features:
+  - Expose (and fix) `est_p_ci` which formats the estimate, p-value, and confidence interval into text.
 
-- The estimable() function now returns objects that are of class
-  'estimable'.
+Other Changes:
+  - Upgrade to current package development tooling, including:
+  - Use `roxygen2` for documentation and NAMESPACE
+  - Use `NEWS.md` instead of `NEWS`
+  - Add additional contributors to authors list and use new format.
 
-- The confidence interval function ci() now has a method for
-  'estimable' objects, with the same layout as for 'lm' objects,
-  making it easier to combine confidence information about model
-  parameters and estimable functions into a single table.
+# gmodels Version 2.18.1 - 2018-06-25
+
+Other Changes:
+  - Remove soft-links for NEWS and ChangeLog files for platform portability.
+
+# gmodels Version 2.18.0 - 2018-06-19
+
+Bug fixes:
+  
+  - ci.binom() was using an incorrect method for calcuating binomial
+    conficence intervals.  It now calculates the Clopper-Pearson 'exect'
+    interval, which is *conservative* due to the discrete nature of the
+    binomial distribution.
+
+Other Changes:
+  
+  - Support for lme4 objects has been removed due to incompatible
+    changes to the lme4 package.
+
+# gmodels Version 2.16.0 - 2014-07-24
+
+New features:
+  
+  - The estimable() function now returns objects that are of class
+    'estimable'.
+  
+  - The confidence interval function ci() now has a method for
+    'estimable' objects, with the same layout as for 'lm' objects,
+    making it easier to combine confidence information about model
+    parameters and estimable functions into a single table.
 
 
-Version 2.15.5 - 2013-07-18
----------------------------
+# gmodels Version 2.15.5 - 2013-07-18
 
 Bug fixes:
 
@@ -49,8 +54,7 @@ Other Changes:
 - Remove unused argument to ci.mer()
 
 
-Version 2.15.3 - 2012-06-27
----------------------------
+# gmodels Version 2.15.3 - 2012-06-27
 
 Bug fixes:
 
@@ -58,8 +62,7 @@ Bug fixes:
   lme4 version 0.999999-0.
 
 
-Version 2.15.2 - 2012-04-19
----------------------------
+# gmodels Version 2.15.2 - 2012-04-19
 
 Bug fixes:
 
@@ -72,16 +75,14 @@ Bug fixes:
   references.
 
 
-Version 2.15.1 - 2011-01-16
----------------------------
+# gmodels Version 2.15.1 - 2011-01-16
 
 Bug fixes:
 
 - Fix warnings reported by new versions of R CMD check.
 
 
-Version 2.15.0
---------------
+# gmodels Version 2.15.0
 
 New features:
 
@@ -94,8 +95,7 @@ Bug fixes:
 - Move extra copyright text to Author field instead of License field.
 
 
-Version 2.14.1
---------------
+# gmodels Version 2.14.1
 
 New features:
 
@@ -105,16 +105,13 @@ Other:
 
 - Fix minor typos in manual page for estimable().
 
-Version 2.14.0
---------------
+# gmodels Version 2.14.0
 
 New Features:
 
 - Add support for 'mlm' objects to estimable
 
-
-Version 2.13.2
---------------
+# gmodels Version 2.13.2
 
 Bug Fixes:
 
@@ -124,8 +121,7 @@ Bug Fixes:
 - Correct Greg's email address in two help files.
 
 
-Version 2.13.1
---------------
+# gmodels Version 2.13.1
 
 Bug Fixes:
 
@@ -141,13 +137,7 @@ Bug Fixes:
 	- Move old function to estimable.default()
 	- Add  estimable.lmer() to the exported methods list in NAMESPACE
 
-
-Version 2.13.0
---------------
-
-
-Version 2.12.0
---------------
+# gmodels Version 2.12.0
 
 - Updated Greg's email address.
 
@@ -162,11 +152,7 @@ Version 2.12.0
         estimable(reg, c(    0,   1,	 0,   -1))
   which should make estimable() much easier to use for large models.
 
-Version 2.1.0
--------------
-
-Version 2.0.8
--------------
+# gmodels Version 2.0.8
 
  - Added DESCRIPTION and removed DESCRIPTION.in
 

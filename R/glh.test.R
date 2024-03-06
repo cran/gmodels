@@ -1,6 +1,87 @@
-# $Id: glh.test.R 625 2005-06-09 14:20:30Z nj7w $
-
-glh.test <- function( reg, cm, d=rep(0, nrow(cm)) )
+#' Test a General Linear Hypothesis for a Regression Model
+#' 
+#' Test, print, or summarize a general linear hypothesis for a regression model
+#' 
+#' Test the general linear hypothesis \eqn{C \hat{\beta} = d } for the regression model `reg`.
+#' 
+#' The test statistic is obtained from the formula: 
+#' \deqn{
+#'  f = \frac{(C \hat{\beta} - d)' ( C (X'X)^{-1} C' ) (C \hat{\beta} - d) / r }{ 
+#'      SSE / (n-p) } 
+#'  }
+#' where
+#' * `r` is the number of contrasts contained in `C`, and
+#' * `n-p` is the model degrees of freedom.
+#'  
+#' Under the null hypothesis, `f` will follow a F-distribution with `r` and `n-p`
+#' degrees of freedom
+#' 
+#' @aliases glh.test print.glh.test summary.glh.test
+#' @param reg Regression model
+#' @param cm contrast matrix `C` .  Each row specifies a linear combination of the
+#' coefficients
+#' @param d vector `d` specifying the null hypothesis values for each linear
+#' combination
+#' 
+#' @return Object of class `c("glh.test","htest")` with elements:
+#' \item{call }{Function call that created the object}
+#' \item{statistic }{F statistic} 
+#' \item{parameter}{vector containing the numerator (r) and 
+#'  denominator (n-p) degrees of freedom} 
+#' \item{p.value}{p-value}
+#' \item{estimate}{computed estimate for each row of `cm`}
+#' \item{null.value}{d} 
+#' \item{method}{description of the method}
+#' \item{data.name}{name of the model given for `reg`}
+#' \item{matrix}{matrix specifying the general linear hypotheis (`cm`)}
+#' 
+#' @note When using treatment contrasts (the default) the first level of the
+#' factors are subsumed into the intercept term.  The estimated model
+#' coefficients are then contrasts versus the first level. This should be taken
+#' into account when forming contrast matrixes, particularly when computing
+#' contrasts that include 'baseline' level of factors.
+#' 
+#' See the comparison with `fit.contrast` in the examples below.
+#' @author Gregory R. Warnes \email{greg@@warnes.net}
+#' @seealso [fit.contrast()], [estimable()], [stats::contrasts()]
+#' @references R.H. Myers, Classical and Modern Regression with Applications,
+#' 2nd Ed, 1990, p. 105
+#' @keywords models regression
+#' @examples
+#' 
+#' 
+#' # fit a simple model
+#' y <- rnorm(100)
+#' x <-  cut(rnorm(100, mean=y, sd=0.25),c(-4,-1.5,0,1.5,4))
+#' reg <- lm(y ~ x)
+#' summary(reg)
+#' 
+#' # test both group 1 = group 2  and group 3 = group 4
+#' # *Note the 0 in the column for the intercept term*
+#' 
+#' C <- rbind( c(0,-1,0,0), c(0,0,-1,1) )
+#' ret <- glh.test(reg, C)
+#' ret  # same as 'print(ret) '
+#' summary(ret)
+#' 
+#' # To compute a contrast between the first and second level of the factor
+#' # 'x' using 'fit.contrast' gives:
+#' 
+#' fit.contrast( reg, x,c(1,-1,0,0) )
+#' 	
+#' # To test this same contrast using 'glh.test', use a contrast matrix
+#' # with a zero coefficient for the intercept term.  See the Note section,
+#' # above, for an explanation.
+#' 
+#' C <- rbind( c(0,-1,0,0) )
+#' glh.test( reg, C )
+#' 
+#' @importFrom stats pf
+#' @importFrom stats coef
+#' @importFrom stats summary.lm
+#' 
+#' @export
+glh.test <- function(reg, cm, d=rep(0, nrow(cm)) )
 {
 
   if( !is.matrix(cm) && !is.data.frame(cm) )
@@ -53,6 +134,8 @@ glh.test <- function( reg, cm, d=rep(0, nrow(cm)) )
   retval
 }
 
+#' @exportS3Method base::print
+#' @inheritParams base::print
 print.glh.test <- function(x, digits = 4, ... )
 {
     cat("\n")
@@ -74,7 +157,8 @@ print.glh.test <- function(x, digits = 4, ... )
   }
 
 
-
+#' @exportS3Method base::summary
+#' @inheritParams base::summary
 summary.glh.test <- function(object, digits = 4, ... )
 {
     cat("\n")
